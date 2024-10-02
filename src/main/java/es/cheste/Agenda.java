@@ -1,27 +1,74 @@
 package es.cheste;
 
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.util.InputMismatchException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
+
 public class Agenda {
     private static ResourceBundle bundle;
+    private static final Logger LOGGER = LogManager.getLogger();
     public static void main(String[] args) {
+
         Scanner sc = new Scanner(System.in);
         bundle = ResourceBundle.getBundle("mensajes", seleccionarIdioma(sc));
-         menuOpcionesAgenda();
 
+        boolean seguirEnLaAgenda = Boolean.TRUE;
+        while (seguirEnLaAgenda){
 
+            seguirEnLaAgenda = menuOpcionesAgenda(sc);
+
+        }
     }
 
-    private static void menuOpcionesAgenda(){
+    private static boolean menuOpcionesAgenda(Scanner sc){
 
-        System.out.println(bundle.getString("menu.opciones"));
+        int opcionElegida = 0;
 
+        do {
 
+            try{
 
+                System.out.println(bundle.getString("menu.opciones"));
+                opcionElegida = sc.nextInt();
+                sc.nextLine();
 
+            } catch (InputMismatchException e){
 
+                //TODO el resources bundle
+                System.out.println(bundle.getString("error.opcionNoValida"));
+
+            }
+
+        } while (opcionElegida < 1 || opcionElegida > 6);
+
+        boolean continuarEnLaAplicacion = Boolean.TRUE;
+        switch (opcionElegida){
+            case 1:
+                //guardarContacto();
+                break;
+            case 2:
+                //modificarContacto();
+                break;
+            case 3:
+                //eliminarContacto();
+                break;
+            case 4:
+                //buscarContacto();
+                break;
+            case 5:
+                //mostrarContactos();
+                break;
+            default:
+                continuarEnLaAplicacion = Boolean.FALSE;
+        }
+
+        return continuarEnLaAplicacion;
     }
 
     private static Locale seleccionarIdioma(Scanner sc){
@@ -47,6 +94,7 @@ public class Agenda {
         };
 
     }
+    pria
 
 
 }
